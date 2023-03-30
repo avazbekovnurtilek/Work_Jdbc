@@ -17,7 +17,7 @@ public class App
 //        addCountry("Ankara","Turkey","Recep Erdogan");
 //        addCountry("Beijing","China","Xi Jinping");
 //        System.out.println(getCount());
-        selectCountry(5);
+        selectCountry(6);
         for (baseCountry baseCountry : getList()) {
             System.out.println(baseCountry);
         }
@@ -71,8 +71,12 @@ public class App
         try (Connection connection = Db.connection();
         PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
             preparedStatement.setInt(1,id);
-            preparedStatement.executeUpdate();
-            System.out.println("Выведен "+id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            System.out.println(resultSet.getInt("id")+ " "
+            + resultSet.getString("city")+ " "
+            + resultSet.getString("country")+ " "
+            + resultSet.getString("president"));
         }catch (SQLException e){
             System.out.println(e.getMessage());
         }
